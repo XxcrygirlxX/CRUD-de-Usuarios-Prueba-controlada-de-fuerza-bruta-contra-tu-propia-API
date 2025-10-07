@@ -7,8 +7,5 @@ The attack is carried out by running the attack.sh script, which will execute th
 The API is then executed on the local port. This will give us the local port so we can work with the server.  
 <img width="914" height="467" alt="image" src="https://github.com/user-attachments/assets/81757ec3-2cfa-4d09-b8e6-baf8c107b2d9" />
 
-
-
+Finally, we will perform the test on the terminal to verify that the attack was successful.
 <img width="505" height="549" alt="image" src="https://github.com/user-attachments/assets/57a2ff97-c208-4a72-a8c4-dc2e4fb959ef" />
-bash   ./attack.sh
-
