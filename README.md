@@ -4,10 +4,8 @@ The attack is carried out by running the attack.sh script, which will execute th
 The attack is carried out by running the attack.sh script, which will execute the bash script. The bash script will then execute the API script, which will execute the attack.sh script again. This process will continue until the attack is successful 
 <img width="463" height="112" alt="image" src="https://github.com/user-attachments/assets/484a83c3-b6fc-4ca1-a3fc-6ffbd6a70b54" />
 
-
-
+The API is then executed on the local port. This will give us the local port so we can work with the server.  
 <img width="914" height="467" alt="image" src="https://github.com/user-attachments/assets/81757ec3-2cfa-4d09-b8e6-baf8c107b2d9" />
-fastapi server 
 
 
 
