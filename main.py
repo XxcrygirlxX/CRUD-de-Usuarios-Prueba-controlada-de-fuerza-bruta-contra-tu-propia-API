@@ -22,11 +22,7 @@ class SalidaUsuario(BaseModel):
 
 
 usuarios = [
-    {"id": 1, "usuario": "Martina", "correo": "martina23@gmail.com", "password": "Marti_2024", "activa": True},
-    {"id": 2, "usuario": "Daniel",  "correo": "daniel.pro@gmail.com", "password": "DaniPass09", "activa": True},
-    {"id": 3, "usuario": "Valeria", "correo": "valeria.dev@gmail.com", "password": "Val3ri@", "activa": True},
-    {"id": 4, "usuario": "Andrés",  "correo": "andres1998@gmail.com", "password": "Andres98", "activa": True},
-    {"id": 5, "usuario": "Camila",  "correo": "camila.design@gmail.com", "password": "Cami*321", "activa": True}
+    {"id": 2, "usuario": "Daniel",  "correo": "daniel.pro@gmail.com", "password": "abc", "activa": True},
 ]
 
 
@@ -74,7 +70,6 @@ def actualizar_usuario(user_id: int, data: UsuarioNuevo):
     u["activa"] = data.activa if data.activa is not None else u["activa"]
     return {"id": u["id"], "usuario": u["usuario"], "correo": u["correo"], "activa": u["activa"]}
 
-
 @app.delete("/usuarios/{user_id}")
 def eliminar_usuario(user_id: int):
     global usuarios
@@ -82,7 +77,6 @@ def eliminar_usuario(user_id: int):
         raise HTTPException(status_code=404, detail="usuario no encontrado")
     usuarios = [x for x in usuarios if x["id"] != user_id]
     return {"message": "Usuario eliminado"}
-
 
 @app.post("/login")
 def login(payload: Login):
